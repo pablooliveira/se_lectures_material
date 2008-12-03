@@ -36,30 +36,35 @@
 
 \section{Introduction}
 \begin{frame}[fragile]
-  \frametitle{Software projects are difficult}
-  \begin{itemize}
-  \item
-  \item
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
   \frametitle{Lessons from the past}
   \begin{itemize}
-  \item
-  \item
+  \item 1996 Ariane-5 self-destructs, unhandled floating point exception,
+    \$500M lost.
+  \item 1998 Mars Climate Orbiter is lost, navigation data expressed in imperial
+    units, \$327.6M lost.
+  \item 1988-1994 FAA Advanced Automation System, project is abandoned, blame
+    on management and over-ambitious specifications, \$2.6B lost.
+  \item 1985-1987 Therac-25 medical accelerator, a radiation therapy device
+    malfunctions because of a race condition, 5 patients die, others are injured.
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Common problems}
   \begin{itemize}
-  \item
-  \item
+  \item Amount of work is underestimated.
+  \item Project specifications are vague.
+  \item Lack of communication :
+    \begin{itemize}
+    \item `Communication overheads increase as the number of people increase
+      (Brooks)
+    \end{itemize}
+  \item Issues are not properly tracked.
+  \item Teams botch the testing phase because of pressure from management.
   \end{itemize}
 \end{frame}
 
-\section{Software lifecycle}
+\section{Software life-cycle}
 
 \begin{frame}
   \frametitle{Outline}
@@ -78,7 +83,7 @@
   \item Plan time carefully: ``adding manpower to a late software project
     makes it later'' (Brooks).
   \item You only control what you can measure: use metrics.
-  \item Model dependences and deadline, analyse risk.
+  \item Model dependencies and deadline, analyse risk.
   \item Keep track of deadlines and critical tasks, Gantt chart.
   \end{itemize}
   \begin{center}
@@ -152,7 +157,7 @@
     \item Use cases
     \item Each user story has acceptance tests
     \end{itemize}
-  \item Strawmen
+  \item Straw-men
     \begin{itemize}
     \item Sketch the product
     \item Use anything; napkins, storyboards, HTML, flowcharts
@@ -198,7 +203,7 @@
 \frametitle{Requirements specifications}
 \begin{itemize}
 \item At the end of the requirements gathering phase, the team must produce a
-  recapitulative document.
+  specification document.
 \item The problem must be explained.
 \item Functional and Non-Functional requirements must be stated, and numbered.
 \item Some exemplary use cases that illustrate the product's functions should be
@@ -365,7 +370,7 @@
       \begin{itemize}
       \item Takes in account the V\&V and defines acceptance tests for each step.
       \end{itemize}
-    \item Better correspondance between design \& tests.
+    \item Better correspondence between design \& tests.
     \item Makes V\&V a central part of the process.
     \end{itemize}
   \end{exampleblock}
@@ -446,12 +451,12 @@
   \begin{itemize}
   \item A buzzword that describes an emerging practice of software development.
   \item Encourages adaptation, inspection, communication, customer involvement,
-    timeboxed development steps.
+    time-boxed development steps.
   \item Still very new, it is hard to evaluate the benefits from agile methods:
     \begin{itemize}
     \item pair programming.
     \item stand-up meetings.
-    \item timeboxed development steps.
+    \item time-boxed development steps.
     \end{itemize}
   \item Yet it seems mainly effective with small teams of experienced developers.
   \end{itemize}
@@ -470,6 +475,62 @@
   \end{itemize}
 \end{frame}
 
+\section{Software development tools.}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Software development tools}
+  \begin{itemize}
+  \item Tools will never replace team communication.
+  \item Tools will never replace well though design.
+  \item BUT...
+  \item Tools can help in keeping track of code, bugs and issues.
+  \item If used wisely, they can ease project documentation,
+    management and communication.
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Testing frameworks}
+  \begin{itemize}
+  \item JUnit, ...
+  \item Eases writing of unit, functional and regression tests.
+  \item Allow automatic execution of the tests.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Version control system}
+  \begin{itemize}
+  \item SVN(centralized), GIT(distributed), ...
+  \item Keep track of changes in code.
+  \item Each change is tagged with a commit message that explains which problem
+    the code is going to solve.
+  \item Developers have the complete history of a line code at their
+    fingertips.
+  \item When coupled with regression testings, can help finding the exact change
+    that introduced a bug.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Issues tracker}
+  \begin{itemize}
+    \item Roundup, Trac, etc ...
+  \item Keep track of issues in a project.
+  \item Allow easy bug reporting from users.
+  \item Each issue is assigned a ticket which traces:
+    \begin{itemize}
+    \item the discussion surrounding the issue.
+    \item the state of the issue.
+    \item the proposed patches to solve the issue.
+    \item the code commit that solves the issue.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
 \begin{frame}[fragile]
   \begin{center}
     \tiny
@@ -482,5 +543,4 @@
     }
   \end{center}
 \end{frame}
-
 \end{document}
