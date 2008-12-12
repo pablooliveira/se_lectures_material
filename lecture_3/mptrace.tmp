@@ -1,0 +1,26 @@
+
+input metauml;
+
+
+beginfig(1);
+
+    Class.list("List")()();
+    Class.listIterator("ListIterator")()("+First()", "+Next()", "+isDone()", "+CurrentItem()");
+
+
+    list.nw = (0, 0);
+
+    listIterator.w = list.e + (80, 0);
+
+
+    drawObjects(list, listIterator);
+
+
+    clink(associationUni)(listIterator, list);
+
+endfig;
+
+
+end
+
+end

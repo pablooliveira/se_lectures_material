@@ -1,0 +1,136 @@
+\documentclass[10pt]{beamer}
+\usepackage{xmpincl}
+\includexmp{license}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{ae}
+\usepackage[french]{babel}
+\usepackage{array, longtable}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\usetheme{Antibes}
+\setbeamertemplate{navigation symbols}{}
+
+
+\usepackage{listings}
+\usepackage{verbatim}
+\makeatletter
+\newwrite\lstvrb@out
+\newenvironment{code}{%
+  \begingroup
+  \@bsphack
+  \immediate\openout\lstvrb@out\jobname.lst
+  \let\do\@makeother\dospecials\catcode`\^^M\active
+  \def\verbatim@processline{%
+    \immediate\write\lstvrb@out{\the\verbatim@line}}%
+  \verbatim@start}{%
+  \immediate\closeout\lstvrb@out
+  \@esphack
+  \endgroup
+
+  \begin{alertblock}{}
+    \lstinputlisting[language=java]{\jobname.lst}
+  \end{alertblock}}
+\makeatother
+
+\lstset{language=java, basicstyle=\small, commentstyle=\color{blue}\textrm}
+
+% for printing
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+% \pgfpagesuselayout{resize to}[a4paper,border shrink=5mm,landscape]
+
+\title{Computer Science Introductory Course MSC - Software engineering}
+
+\subtitle{Lecture 3: Design patterns}
+\usepackage{verbatim}
+
+\author[Pablo Oliveira]{Pablo Oliveira \texttt{<pablo@sifflez.org>}}
+\institute{ENST}
+
+\date{}
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Introduction}
+\begin{frame}
+\frametitle{Introduction}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Iterator (UML)}
+  \begin{center}
+    \includegraphics[height=0.7\paperheight]{Iterator2.1}
+  \end{center}
+\end{frame}
+\begin{frame}[fragile, shrink]
+  \frametitle{Iterator (Java)}
+    \begin{code}
+  class Vector implements Container {
+    private Item[] elements;
+    private int last = -1;
+    Vector(int size){elements = new Item[size];}
+    Item get(int pos) {return elements[pos];}
+    int getLast() {return last;}
+    void Append(Item i){elements[++last] = i;}
+    Iterator CreateIterator()
+      {return new VectorIterator(this);}
+  }
+  class VectorIterator implements Iterator {
+    private Vector v;
+    private int cursor;
+    VectorIterator(Vector v) {this.v = v;First();}
+    void First() {cursor = 0;}
+    void Next() {cursor++;}
+    boolean isDone() {return cursor == v.getLast();}
+    Item CurrentItem() {return v.get(cursor);}
+  }
+\end{code}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Decorator (UML)}
+  \begin{center}
+    \includegraphics[width=0.9\paperwidth]{Decorator.1}
+  \end{center}
+\end{frame}
+\begin{frame}
+  \frametitle{Decorator Example (UML)}
+  \begin{center}
+    \includegraphics[width=0.9\paperwidth]{DecoratorExample.1}
+  \end{center}
+\end{frame}
+\begin{frame}[fragile, shrink]
+  \frametitle{Decorator Example (Java)}
+\begin{code}
+interface Server {
+  response handleRequest(request req);
+}
+
+abstract class ServerDecorator implements Server {
+  protected Server decoratedServer;
+  ServerDecorator(Server s) {decoratedServer = s;}
+}
+
+class ServerLogger extends ServerDecorator {
+  ServerLogger(Server s){super(s);}
+  response handleRequest(request req) {
+    System.out.println
+      ("Server got request from " + req.from);
+    return decoratedServer.handleRequest(req);
+  }
+}
+\end{code}
+\end{frame}
+
+
+\end{document}
