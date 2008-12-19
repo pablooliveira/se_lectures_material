@@ -18,22 +18,14 @@
 input metauml;
 
 beginfig(1);
-    Class.component("Server")()("+response handleRequest(request req)");
-    Class.concreteComp("HTTPServer")()();
-    Class.decorator("ServerDecorator")()("+response handleRequest(request req)");
-    Class.concreteB("ServerLogger")()("+response handleRequest(request req)", "+logRequest(request req)");
+    Class.singleton("Singleton")
+                   ("-static uniqueInstance")
+                   ("+static getInstance()");
 
-    centered_allign_top(concreteComp, decorator)(20, below(component.s, 50));
-    topToBottom(25)(decorator, concreteB);
-    
-    drawObjects(component, concreteComp, decorator, concreteB);
-
-    link(inheritance)(pathStepY(concreteComp.n + (15, 0), component.s, 20));
-    link(inheritance)(pathStepY(decorator.n, component.s, 20));
-
-    link(aggregationUni)(pathStepX(component.e, decorator.e + (0, 10), 90));
-
-    link(inheritance)(pathStepY(concreteB.n, decorator.s, 20));
+    drawObjects(singleton);
 endfig;
 
 end
+
+
+

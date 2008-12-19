@@ -6,6 +6,9 @@
 \usepackage{ae}
 \usepackage[french]{babel}
 \usepackage{array, longtable}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,trees,fit,decorations.pathmorphing,backgrounds}
+
 \DeclareGraphicsRule{*}{mps}{*}{}
 \usetheme{Antibes}
 \setbeamertemplate{navigation symbols}{}
@@ -60,11 +63,49 @@
 \end{frame}
 
 \section{Introduction}
+\subsection{What is a design pattern ?}
 \begin{frame}
-\frametitle{Introduction}
+\frametitle{What is a design pattern ?}
+\begin{itemize}
+  \item Proposed by architect C. Alexander in 70ths.
+  \item General reusable solution to a recurring problem.
+  \item Must be adapted to each concrete case.
+  \item Patterns allow to communicate complex principle using a common vocabulary.
+  \item Describe software abstractions.
+  \item Each programming language provides some patterns already included as idioms:
+    \begin{itemize}
+      \item In java : encapsulation, subclassing, etc...
+    \end{itemize}
+  \item Use design patterns wisely (sometimes they only clutter the problem), always adapt them 
+    to your particular problem and context.
+\end{itemize}
 \end{frame}
 
+\subsection{Categories of design patterns}
+\begin{frame}
+\frametitle{Categories of design patterns}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\emph{creational}&\emph{structural}&\emph{behavioural}\\
+\hline
+builder  & adapter   & chain of responsability \\
+factory  & bridge    & command                 \\
+prototype& composite & interpreter             \\
+singleton& decorator & iterator                \\
+         & façade    & mediator                \\
+         & flyweight & memento                 \\
+         & proxy     & observer                \\
+         &           & state                   \\
+         &           & strategy                \\
+         &           & visitor                 \\
+\hline
+\end{tabular}
+\end{center}
+\end{frame}
 
+\section{Common Design patterns}
+\subsection{Iterator}
 \begin{frame}
   \frametitle{Iterator (UML)}
   \begin{center}
@@ -96,40 +137,187 @@
 \end{code}
 \end{frame}
 
-
+\subsection{Decorator}
 \begin{frame}
   \frametitle{Decorator (UML)}
   \begin{center}
     \includegraphics[width=0.9\paperwidth]{Decorator.1}
   \end{center}
 \end{frame}
-\begin{frame}
-  \frametitle{Decorator Example (UML)}
+\begin{frame}[shrink]
+  \frametitle{Decorator Example (UML)} 
   \begin{center}
     \includegraphics[width=0.9\paperwidth]{DecoratorExample.1}
   \end{center}
 \end{frame}
 \begin{frame}[fragile, shrink]
   \frametitle{Decorator Example (Java)}
-\begin{code}
+\begin{code} 
 interface Server {
   response handleRequest(request req);
 }
-
 abstract class ServerDecorator implements Server {
   protected Server decoratedServer;
   ServerDecorator(Server s) {decoratedServer = s;}
 }
-
 class ServerLogger extends ServerDecorator {
   ServerLogger(Server s){super(s);}
   response handleRequest(request req) {
+    logRequest(req);
+    return decoratedServer.handleRequest(req);
+  }
+  void logRequest(request red) {
     System.out.println
       ("Server got request from " + req.from);
-    return decoratedServer.handleRequest(req);
   }
 }
 \end{code}
+\end{frame}
+\subsection{Singleton}
+\begin{frame}
+  \frametitle{Singleton (UML)}
+  \begin{center}
+    \includegraphics[width=0.5\paperwidth]{Singleton.1}
+  \end{center}
+  \structure{The singleton pattern ensures that only a single instance of an object is ever created.}
+\end{frame}
+
+\begin{frame}[fragile, shrink]
+  \frametitle{Singleton Example (Java)}
+\begin{code} 
+public class Singleton {
+   private static ClassicSingleton instance = null;
+   protected Singleton() {} // no instantiation
+   public static ClassicSingleton getInstance() {
+      if(instance == null) {
+         instance = new Singleton();
+      }
+      return instance;
+   }
+}
+\end{code}
+\end{frame}
+
+\subsection{Visitor}
+\begin{frame}[shrink]
+  \frametitle{Visitor (UML)}
+  \begin{center}
+    \includegraphics[width=\paperwidth]{Visitor4.1}
+  \end{center}
+  \structure{The visitor pattern decouples the iteration over a structure and the operations made during the iteration}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Visitor Example: Tree Visitor}
+\begin{center}
+\begin{tikzpicture}
+  \node at(0,0) {-}
+    child{node{5}}
+    child{node{+}
+      child{node{1}}
+      child{node{2}}};
+\end{tikzpicture}
+\end{center}
+\structure{We have a tree structure, and want to perform various algorithms on it. Each algorithm should be described in its own class...}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Visitor Example (Java): Object Structure}
+\begin{code} 
+abstract class TreeNode {
+  TreeNode left, right;
+}
+class PlusN extends TreeNode {
+  void acceptVisitor(TreeVisitor v) 
+    {v.visitPlus(this);}
+}
+class MinusN extends TreeNode {
+  void acceptVisitor(TreeVisitor v) 
+    {v.visitMinus(this);}
+}
+class IntegerN extends TreeNode {
+  Integer value;
+  void acceptVisitor(TreeVisitor v) 
+    {v.visitInteger(this);}
+}
+\end{code}
+\end{frame}
+
+
+\begin{frame}[fragile, shrink]
+  \frametitle{Visitor Example (Java): TreeVisitor}
+\begin{code} 
+interface TreeVisitor {
+  int visitInteger(IntegerN i);
+  int visitPlus(PlusN p);
+  int visitMinus(MinusN m);
+}
+
+class ReduceVisitor extends TreeVisitor {
+  Integer value;
+  void visitInteger(IntegerN i)
+    {value = i.value;}
+  void visitPlus(PlusN p)
+    {
+      p.left.acceptVisitor(this);
+      Integer first = value;
+      p.right.acceptVisitor(this);
+      value += first;
+    }
+  ...
+}
+\end{code}
+\end{frame}
+
+\subsection{Factory}
+\begin{frame}[shrink]
+  \frametitle{Factory (UML)}
+  \begin{center}
+    \includegraphics[width=0.8\paperwidth]{AbstractFactory.1}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+  \frametitle{Factory Example (Java)}
+\begin{code} 
+interface Button{};
+interface TextBox{};
+
+interface GUIFactory{
+  public Button createButton();
+  public TextBox createTextBox();
+}
+WindowsFactory implements GUIFactory{
+  public Button createButton() 
+    {return new WindowsButton();}
+  public TextBox createTextBox() 
+    {return new WindowsTextBox();}
+}
+class LinuxFactory implements GUIFactory {
+  public Button createButton() 
+    {return new LinuxButton();}
+...}
+class Application {
+  public Application(GUIFactory factory){
+    Button button = factory.createButton();
+      button.paint();
+    }
+  public static void main(String args[]){
+    if (onWindows())
+       new Application(new WindowsFactory());
+    else
+       new Application(new LinuxFactory());
+  }}
+\end{code}
+\end{frame}
+
+\subsection{Proxy}
+\begin{frame}[shrink]
+  \frametitle{Proxy(UML)}
+  \begin{center}
+    \includegraphics[width=0.8\paperwidth]{Proxy.1}
+  \end{center}
 \end{frame}
 
 

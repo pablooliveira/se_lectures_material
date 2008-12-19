@@ -18,22 +18,27 @@
 input metauml;
 
 beginfig(1);
-    Class.component("Server")()("+response handleRequest(request req)");
-    Class.concreteComp("HTTPServer")()();
-    Class.decorator("ServerDecorator")()("+response handleRequest(request req)");
-    Class.concreteB("ServerLogger")()("+response handleRequest(request req)", "+logRequest(request req)");
+    Class.client("Client")()();
+    Class.subject("Subject")()("+Request()");
+    Class.realSubject("RealSubject")()("+Request()");
+    Class.proxy("Proxy")()("+Request()");
 
-    centered_allign_top(concreteComp, decorator)(20, below(component.s, 50));
-    topToBottom(25)(decorator, concreteB);
-    
-    drawObjects(component, concreteComp, decorator, concreteB);
+    Note.noteRequest("realSubject->Request");
 
-    link(inheritance)(pathStepY(concreteComp.n + (15, 0), component.s, 20));
-    link(inheritance)(pathStepY(decorator.n, component.s, 20));
+    subject.w = client.e + (40, 0);
+    centered_allign_top(realSubject, proxy)(40, below(subject.s, 50));
 
-    link(aggregationUni)(pathStepX(component.e, decorator.e + (0, 10), 90));
+    noteRequest.sw = proxy.se + (30, 0);
 
-    link(inheritance)(pathStepY(concreteB.n, decorator.s, 20));
+    drawObjects(client, subject, realSubject, proxy, noteRequest);
+
+    clink(associationUni)(client, subject);
+    clink(associationUni)(proxy, realSubject);
+
+    link(inheritance)(pathStepY(realSubject.n, subject.s, 20));
+    link(inheritance)(pathStepY(proxy.n, subject.s, 20));
+
+    link(dashedLink)(proxy.methodStack.pict[0].e -- noteRequest.w);
 endfig;
 
 end
