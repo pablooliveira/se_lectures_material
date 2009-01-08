@@ -320,5 +320,27 @@ class Application {
   \end{center}
 \end{frame}
 
+\begin{frame}[fragile, shrink]
+  \frametitle{Exercice: Remote objects}
+  \begin{itemize}
+    \item We are designing an application that manages a pool of objects of class Entry, some of them are local 
+      and some of them are on a remote server, we want to create a Proxy that enables us to access an Entry instance
+      without worrying if the object is local or remote.
+    \item You have already written these classes:
+\begin{code}
+class Entry{
+  EntryId uniqueId;
+  String getData();
+  void setData(String s);
+}
+
+class RemoteServer{
+  public static String getData(EntryId id);
+  public static void   setData(EntryId id, String s);
+} 
+\end{code}
+\item Design a RemoteProxy class that makes remote/local access transparent.
+\end{itemize}
+\end{frame}
 
 \end{document}
