@@ -1,0 +1,116 @@
+ \documentclass{exercices}
+\usepackage{ae, aeguill, graphicx}
+\usepackage{fullpage}
+\usepackage{xspace}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{latexsym}
+\usepackage{url}
+\usepackage{tikz}
+\usetikzlibrary{decorations}
+\usetikzlibrary{decorations.fractals}
+\usepackage{multicol}
+\usepackage{verbatim}
+
+\renewcommand{\|}{\url|}
+\begin{document}
+
+\sujet{SE lab 1 - 09 january 2009}
+
+\section{Introduction}
+In this lab session we will implement a simple library management software that is going to 
+store the authors and titles of our book collection. The system has the following functional
+requirements:
+\begin{itemize}
+  \item Store an unlimited (theoretically) number of books entries, where each book entry contains an author and a title.
+  \item The application must provide the following operations:
+    \begin{itemize}
+    \item Adding new entries, there may not be two entries with the same title.
+    \item Deleting existing entries based on the title.
+    \item Listing all the entries in the database.
+    \item Searching the database for a given title and displaying the matching record (if it exists).
+    \end{itemize}
+\end{itemize}
+The non-functional requirements (which in this case are only interface requirements) are:
+\begin{itemize}
+  \item At startup the user is presented with a list of operations. He can choose among:
+    \begin{itemize}
+    \begin{multicols}{2}{
+    \item 'a' to add a new record
+    \item 's' to search the database
+    \item 'd' to delete an existing record
+    \item 'l' to list all the entries in the database
+    \item 'q' to quit the application}
+    \end{multicols}
+    \end{itemize}
+  \item After completion of the asked operation (except for choice 'q') the same menu will be displayed.
+  \item If the user presses 'a':
+    \begin{itemize}
+    \item he is prompted a new title
+    \item he is prompted the author
+    \end{itemize}
+  \item If the user presses 's':
+    \begin{itemize}
+      \item he is prompted the title to search for
+      \item if found, the book's author is displayed, otherwise an appropriate message is printed
+    \end{itemize}
+
+  \item if the user presses 'd':
+    \begin{itemize}        
+      \item he is prompted the title of the entry to delete
+      \item if found, the user is asked to confirm the deletion, otherwise an appropriate message is printed
+      \item if the user confirms the deletion, the record is removed from the database
+    \end{itemize}
+  \item if the user presses 'l':
+    \begin{itemize}
+      \item all the entries in the database are printed with title and author
+    \end{itemize}
+\end{itemize}
+
+\section{Specifications}
+
+\subsection{Use case diagram}
+\begin{exercice}
+Draw a simple use case diagram that recapitulates the different actions that the user can do. 
+You will use a primary actor: the user, and a secondary actor: the database.
+\end{exercice}
+
+\subsection{Model View Controller}
+
+We are going to design our application around a well-known architectural pattern called MVC
+(Model View Controller). The idea behind MVC is to separate in different components: 
+the data of the application (handled by the model), the presentation of the data (handled by the view) 
+and the operation on data (handled by the controller).
+
+In this case the View is the class that will handle the textual interface described in the non-functional
+specifications. The Controller is the class that will provide the different operations needed: add, search, list, delete.
+Finally the Model is the class that will store the entries.
+
+\subsection{Class Diagram}
+\begin{exercice}
+Design a class diagram that satisfies a model view controller pattern for our library management application.
+You will use four classes:
+\begin{itemize}
+  \item UserInterface (the view)
+  \item Controller (the controller)
+  \item Book, a class that models an entry.
+  \item Database (the model), which contains many Books.
+\end{itemize}
+
+Add all the attributes, methods and associations that you deem necessary.
+\end{exercice}
+\subsection{Sequence Diagram}
+\begin{exercice}
+  Design a sequence diagram to specify the interactions during:
+  \begin{itemize}
+  \item the 'add' operation
+  \item the 'delete' operation
+  \end{itemize}
+\end{exercice}
+
+\section{Implemenation}
+\begin{exercice}
+If you have time left, implement the above specifications!
+For implementing the user interface look at the java.io.Console class in the standard API.
+\end{exercice}
+\end{document}
