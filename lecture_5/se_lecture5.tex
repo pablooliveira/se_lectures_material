@@ -61,5 +61,176 @@
 \section{Introduction}
 \begin{frame}
 \frametitle{Introduction}
+\begin{itemize}
+  \item Verification and Validation:
+    \begin{itemize}
+    \item Validation ensures that the software fulfills the requirements.
+    \item \alert{Verification} ensures that the software meets the
+      specification, three approaches :
+      \begin{itemize}
+      \item Prove correctness by formal verification: costly, do not prevent
+        from bugs in the specification.
+      \item Code inspection by peer reviews.
+      \item \alert{Testing}.
+      \end{itemize}
+    \end{itemize}
+\end{itemize}
 \end{frame}
+
+\section{What to test ?}
+\begin{frame}
+  \frametitle{What to test ?}
+  \begin{itemize}
+    \item Running the program on all possible inputs is impossible for complex
+      problems:
+      \begin{itemize}
+      \item exploration space might be insanely large (or worse infinite)
+      \end{itemize}
+    \item Test on a subset of inputs:
+      \begin{itemize}
+      \item Partition inputs in significant classes maximizing the coverage of all the possible cases.
+      \item To do this choose particular inputs for your tests:
+        \begin{itemize}
+          \item inputs that tests all the control branches of your code
+          \item boundary cases (detect overflow and off by one bugs)
+          \item duplicate, null or invalid inputs.
+        \end{itemize}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example of partitionning (1/2)}
+\begin{verbatim}
+specification:
+    int compare (int a, int b);
+
+    The function compare returns:
+       0 if a is equal than b
+       1 if a is strictly superior to b
+      -1 if a is strictly inferior to b
+\end{verbatim}
+
+\structure{Q: What inputs would you test ?}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example of partitionning (2/2)}
+\begin{verbatim}
+    int compare (int a, int b) {
+      int c = a-b;
+      if (c == 0) return 0;
+      else if (c<0) return -1;
+      else return 1;
+    }
+\end{verbatim}
+\pause
+\begin{verbatim}
+    System.out.println(compare(10,10));          ->  0
+    System.out.println(compare(10,5));           ->  1
+    System.out.println(compare(-10,-5));         -> -1
+    System.out.println(compare(-2147483648,1));  ->  1
+\end{verbatim}
+\end{frame}
+
+\section{Types of tests}
+\begin{frame}[fragile]
+  \frametitle{Black box and White box testing}
+  \structure{Black box testing}
+  \begin{itemize}
+  \item Generate test cases from the specification only.
+  \item Do not make the same assumptions than the programmer.
+  \item Tests are independent of the implementation.
+  \end{itemize}
+
+  \structure{White box testing}
+  \begin{itemize}
+    \item Generate test cases from the source code.
+    \item Improves coverage: we know the different control paths in the code.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Unit tests}
+  \begin{itemize}
+  \item A unit is the smallest testable part of an application.
+  \item Test a single functionality in the code.
+  \item Usually tests a single method.
+  \item Unit tests allow to isolate the parts of the system and show they are
+    correct.
+  \item Most useful during the implemenation phase.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Functional tests}
+  \begin{itemize}
+    \item Functional tests verify the program as a whole.
+    \item Centered in functionality which may be distributed among many classes
+      and functions.
+    \item Important during the integration phase.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Regressions tests}
+  \begin{itemize}
+    \item Each time a bug is detected, a test that catches it must be written.
+    \item If later on code is changed, the test ensures that if the bug appears
+      again, it will be catched.
+  \end{itemize}
+\end{frame}
+
+\section{Automated testing}
+\begin{frame}[fragile]
+  \frametitle{JUnit}
+  \begin{itemize}
+    \item Allows automazing tests.
+    \item Helps during regression testing.
+    \item \verb!http://www.junit.org/!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example(1/2)}
+\begin{verbatim}
+import junit.framework.*;
+
+public class TestCompare extends TestCase {
+  CompareClass comp;
+  protected void setUp() {
+    comp = new CompareClass();
+  }
+  public void testPositive() {
+    int compare = CompareClass.compare(10,5);
+    assertEquals(compare, 1);
+  }
+  public void testBoundaries() {
+    int compare = CompareClass.compare(-2147483648,1);
+    assertEquals(compare, -1);
+  }
+}
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile,shrink]
+  \frametitle{Example(2/2)}
+\tiny
+\begin{verbatim}
+$ javac -cp junit-4.5.jar:. TestCompare.java
+$ java -cp junit-4.5.jar:. junit.textui.TestRunner TestCompare
+..F
+Time: 0,003
+There was 1 failure:
+1) testBoundaries(TestIt)junit.framework.AssertionFailedError: expected:<1> but was:<-1>
+	at TestCOmpare.testBoundaries(TestIt.java:11)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+
+FAILURES!!!
+Tests run: 2,  Failures: 1,  Errors: 0
+\end{verbatim}
+\end{frame}
+
 \end{document}
