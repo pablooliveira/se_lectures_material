@@ -1,0 +1,65 @@
+\documentclass[10pt]{beamer}
+\usepackage{xmpincl}
+\includexmp{license}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{ae}
+\usepackage[french]{babel}
+\usepackage{array, longtable}
+\usetheme{Antibes}
+\setbeamertemplate{navigation symbols}{}
+
+
+\usepackage{listings}
+\usepackage{verbatim}
+\makeatletter
+\newwrite\lstvrb@out
+\newenvironment{code}{%
+  \begingroup
+  \@bsphack
+  \immediate\openout\lstvrb@out\jobname.lst
+  \let\do\@makeother\dospecials\catcode`\^^M\active
+  \def\verbatim@processline{%
+    \immediate\write\lstvrb@out{\the\verbatim@line}}%
+  \verbatim@start}{%
+  \immediate\closeout\lstvrb@out
+  \@esphack
+  \endgroup
+
+  \begin{alertblock}{}
+    \lstinputlisting[language=java]{\jobname.lst}
+  \end{alertblock}}
+\makeatother
+
+\lstset{language=java, basicstyle=\small, commentstyle=\color{blue}\textrm}
+
+% for printing
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+% \pgfpagesuselayout{resize to}[a4paper,border shrink=5mm,landscape]
+
+\title{Computer Science Introductory Course MSC - Software engineering}
+
+\subtitle{Lecture 4: Testing}
+\usepackage{verbatim}
+
+\author[Pablo Oliveira]{Pablo Oliveira \texttt{<pablo@sifflez.org>}}
+\institute{ENST}
+
+\date{}
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Introduction}
+\begin{frame}
+\frametitle{Introduction}
+\end{frame}
+\end{document}
