@@ -1,4 +1,4 @@
-NAME=se_lecture4
+NAME=se_lecture5
 IMAGES = cc-logo.pdf 
 
 %.1: %.mp
