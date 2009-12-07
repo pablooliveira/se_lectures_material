@@ -1,0 +1,83 @@
+\documentclass{exercices}
+\usepackage{ae, aeguill, graphicx}
+\usepackage{fullpage}
+\usepackage{xspace}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{latexsym}
+\usepackage{url}
+\usepackage{tikz}
+\usetikzlibrary{decorations}
+\usetikzlibrary{decorations.fractals}
+\usepackage{multicol}
+\usepackage{verbatim}
+
+\renewcommand{\|}{\url|}
+\begin{document}
+\sujet{INF 821: Project - Subway Itinerary Planner}
+
+This project is based on an initial proposal by Tavleen Singh
+(\texttt{tavleen.singh@telecom-paristech.fr}).
+
+\section{Introduction}
+
+In this project you will design an application to compute shortest
+itineraries in Paris using the ``Metro'' subway network.
+
+The requirements for this project are separated in two categories:
+\begin{itemize}
+  \item Core requirements.
+  \item Bonus requirements.
+\end{itemize}
+
+Core requirements, capture the fundamental features that are
+expected in the final deliverable; they are mandatory.
+Bonus requirements provide extra niceties to the application; they
+are optional.
+
+Once \textbf{and only once all the mandatory requirements have
+been specified and implemented}, you may choose to work on some bonus
+requirements for extra credit.
+
+\section{Core requirements}
+
+Your application will display a graph of the Paris' metro network.
+An interface, either graphic or textual, will allow the user to select
+two locations (starting location and ending location).
+The application will then compute the shortest route between these two
+locations and highlight the found itinerary on the displayed graph.
+
+When computing the shortest route you will take into account:
+\begin{itemize}
+\item the time when traveling on train between two stations on the same line (you may assume a
+  constant train speed, but you must take into account the distance between stations).
+\item the time used to transfer, when changing lines (you may assume this to be
+  constant).
+\end{itemize}
+
+The Paris metro network data may be retrieved from :
+\url{http://www.di.ens.fr/~granboul/enseignement/mmfai/algo2001-2002/tp7/metro+.plan}.
+If you decide to use this source for your data, you \textbf{must} ask permission
+to the original author to use it if you ever release publicly your application.
+
+\section{Bonus requirements}
+
+\subsection{Distributed ``friend'' locator (Easy)}
+Add a web interface to your application that allow users to specify their
+current position. A person can then search for the location of one of her
+friends.
+
+\subsection{Tourist sightseeing map (Easy)}
+Modify your application, so users can input a list
+of monuments (ex. Tour Eiffel, Louvre, Sacr\'e C\oe ur) and the application
+finds the shortest path that goes through all the selected monuments.
+
+\subsection{Generic subway extractor (Hard)}
+Write an OSM XML parser that extract the subway nodes from
+any \url{http://www.openstreetmap.org/} city map.
+This should allow to easily import any city's subway
+transportation system in your application.
+
+
+
+\end{document}
