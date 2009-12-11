@@ -22,7 +22,6 @@
 \author[Pablo Oliveira]{Pablo Oliveira \texttt{<pablo@sifflez.org>}}
 \institute{ENST}
 
-\date{13/10/2008}
 
 \begin{document}
 \begin{frame}
@@ -556,4 +555,131 @@
   \end{center}
 \end{frame}
 
+\section{Complete Example}
+\begin{frame}
+\frametitle{Mastermind game}
+\includegraphics[width=0.2\linewidth]{mastermind}
+\begin{itemize}
+\item We want to build a mastermind game:
+\item The computer chooses a secret arrangement of 4 pins of different colors.
+\item The player tries to guess the secret combination. Repeatedly:
+  \begin{itemize}
+  \item He chooses a color combination.
+  \item For each color belonging to the secret combination
+    in the correct position, he gets a red token.
+  \item For each color belonging to the secret combination
+    in the wrong position, he gets a white token.
+  \item If he gets 4 red tokens the player win.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[shrinkr]
+  \frametitle{Functional Requirements (Interface R1)}
+  \begin{description}
+  \item[R1.0] Interface: to interact with the player we will use a
+    graphical interface. It will be divided in two parts: the
+    board (described in R1.1) and the status area (described in R1.2).
+    \begin{description}
+    \item[R1.1] Board: the board is composed of \#GUESS (see R2.1)
+      lines. Each line is described in R1.3.
+    \item[R1.2] Status area : it will show the result
+      of the game once the game is finished, it can be either ``You won!'' or
+      ``You loose!'' (see end-conditions in R2.2).
+    \item[R1.3] Line area : the line area is used to enter a combination.
+      At each turn, \textbf{only one line area is active}
+      (the one that corresponds to the current guess).
+      Each line area is composed of (see next slide...)
+    \end{description}
+  \end{description}
+\end{frame}
+\begin{frame}[shrink]
+  \frametitle{Functional Requirements (R1.3)}
+    \begin{description}
+    \item[R1.3.1] input interface, the input interface possesses
+      4 buttons. Each button can be in one of the (\#COLOR + 1) states
+      (see R2.2).
+      The states are \{undefined, magenta, cyan, green,
+                yellow, brown\}
+
+      All the buttons start in the ``undefined'' state.
+      Each time we click on a button we advance to the next color state
+      cyclically.
+      The buttons are active only if the current line is active.
+    \item[R1.3.3] Ok button, when the user is happy with its guess, it
+      can validate the guess with this button.
+      Once the guess is validated:
+      \begin{itemize}
+        \item we process the guess and show the tokens in the token area
+          as described in (R2.4).
+        \item we check for end-conditions as described in (R2.5).
+        \item we desactivate the current line and activate the next line.
+      \end{itemize}
+    \item[R1.3.2] Token area: the token area possess four tokens which
+      can have three states among \{undefined, red, white\}.
+      The token area starts with all the tokens in the ``undefined''
+      state, once a line is validated (R1.3.1) the tokens are set
+      according to (R2.4).
+    \end{description}
+\end{frame}
+
+\begin{frame}[shrink]
+  \frametitle{Functional Requirements (Game mechanics R2))}
+  \begin{description}
+  \item[R2.0] Game mechanics
+    \begin{description}
+    \item[R2.1] The player has at most \#GUESS possible guesses.
+                We will use \#GUESS = 10.
+    \item[R2.2] The pins can have at most \#COLOR colors.
+                We will use \#COLOR = 5 and colors = \{magenta, cyan, green,
+                yellow, brown\}.
+    \item[R2.3] At each turn, the player may enter a combination (see R3.1),
+      using the line input interface (see R1.3.1).
+    \item[R2.4] Once a player has entered a combination, the
+      corresponding line tokens (see the token rules in R3.2) are displayed
+      in the line token area (see R1.3.2).
+    \item[R2.5] The games ends when:
+      \begin{itemize}
+      \item The player finds the secret combination, that is
+        four red tokens are shown in (R2.4).
+      \item The player uses all its possible guesses
+            without finding the combination (see R2.1),that is
+            all the lines have been validated (R1.3.3)
+      \end{itemize}
+    \end{description}
+  \end{description}
+\end{frame}
+
+\begin{frame}[shrink]
+  \frametitle{Functional Requirements (Combination and Token rules R3)}
+  \begin{description}
+  \item[R3.0] Combination and token rules
+    \begin{description}
+    \item[R3.1] A combination is an ordered set of 4 elements chosen
+                among \{magenta, cyan, green, yellow, brown\}.
+    \item[R3.1.1] The secret combination (SECRET) is chosen at random by the
+      computer at the start of the game.
+    \item[R3.2] Each combination can be rated with an unordered set of
+      tokens among \{white,red\}.
+      At first the set is empty.
+      \begin{itemize}
+      \item  For each color belonging to SECRET in the correct position,
+        we add a red token to the set.
+      \item For each color belonging to SECRET in the wrong position,
+        we add a white token to the set.
+      \end{itemize}
+    \end{description}
+
+  \end{description}
+\end{frame}
+
+\begin{frame}[shrink]
+  \frametitle{Non Functional requirements}
+  \begin{description}
+    \item[R10] The project will be implemented in Java.
+    \item[R11] The game must be able to run on screen resolutions
+      ranging from 640x480 to 2048x1024.
+    \item[R12] The game file size must not exceed 5Mb.
+  \end{description}
+\end{frame}
 \end{document}

@@ -44,7 +44,7 @@
 \begin{frame}
   \frametitle{Team Composition}
   \begin{itemize}
-  \item Two teams of 3 persons, one team of 4 persons.
+  \item One team of 3 persons, one team of 4 persons.
   \item Each team will have:
     \begin{itemize}
     \item 1 leader
@@ -110,7 +110,7 @@
     \item If you discover a problem in an upstream design phase:
       \begin{itemize}
       \item Document the problem.
-      \item Produce an ``Engineering Change Notice'' to correct 
+      \item Produce an ``Engineering Change Notice'' to correct
         the upstream specification.
       \end{itemize}
   \end{itemize}
@@ -124,7 +124,7 @@
   \item There is no imposed format for requirements and specifications (use what
     fits best).
   \item Requirements and Specifications must be numbered and cross-referenced.
-    Dependances must be clearly stated.
+    Dependences must be clearly stated.
   \item UML use-case diagrams are welcome to exemplify use-case scenarii.
   \item Do \emph{not} start implementation before finishing specifications.
   \end{itemize}
@@ -136,15 +136,15 @@
   \begin{itemize}
   \item Think about the different modules that you will need in your project.
   \item Think about the algorithms you will need.
-  \item Use UML when appropriate:
+  \item Use UML diagrams when appropriate:
     \begin{itemize}
       \item Produce a class diagram for the project.
       \item If needed sequence diagram's can be used.
     \end{itemize}
   \item Once you have decomposed your application in modules:
     \begin{itemize}
-    \item Define their interfaces
-    \item Delineate their responsibility.
+    \item Define their interfaces clearly (it will ease integration).
+    \item Delineate their responsibility (it will avoid duplicate work).
     \end{itemize}
   \item Write a design document that shows the module decomposition, the
     interfaces and the choice of algorithms. Join the class diagram of your application.
@@ -162,8 +162,11 @@
     \item Each class
     \item Each method
     \item Each difficult to understand block of code
+    \item A rule of thumb: each time you find a bug while you are coding,
+      you should correct and add a \textbf{comment} explaining the responsible code.
     \end{itemize}
-  \item Write unit tests while (or before) writing the code.
+  \item Write unit tests while (or before) writing the code. (we will see what
+    unit tests are in the testing lecture)
   \item Use a VCS !
   \item Communicate a lot in the team.
   \end{itemize}
