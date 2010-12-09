@@ -106,7 +106,7 @@ specification:
     int compare (int a, int b);
 
     The function compare returns:
-       0 if a is equal than b
+       0 if a is equal to b
        1 if a is strictly superior to b
       -1 if a is strictly inferior to b
 \end{verbatim}
@@ -202,11 +202,11 @@ public class TestCompare extends TestCase {
     comp = new CompareClass();
   }
   public void testPositive() {
-    int compare = CompareClass.compare(10,5);
+    int compare = comp.compare(10,5);
     assertEquals(compare, 1);
   }
   public void testBoundaries() {
-    int compare = CompareClass.compare(-2147483648,1);
+    int compare = comp.compare(-2147483648,1);
     assertEquals(compare, -1);
   }
 }
